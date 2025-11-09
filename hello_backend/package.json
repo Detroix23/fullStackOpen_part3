@@ -1,0 +1,16 @@
+{
+  "name": "hello_backend",
+  "version": "0.1.0",
+  "description": "First backend using Node.js.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Detroix23",
+  "license": "CC-BY-4.0",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
