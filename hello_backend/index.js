@@ -52,7 +52,7 @@ app.get('/api/notes/:id', (request, response) => {
   if (found) {
     response.json(found);
   } else {
-    response.statusMessage = `Id (${id}) not found in notes.`;
+    response.statusMessage = `index.app.get - /api/notes/:id - Id (${id}) not found in notes.`;
     response
       .status(404)
       .end();

@@ -50,11 +50,27 @@ app.get('/info', (request, response) => {
   `);
 })
 
-app.get('/api/persons', (request, response) => {
+app.get('/api/persons', (_, response) => {
   console.log('index.app.get - /api/persons/ - Responding with persons:', persons);
 
   response.json(persons);
 });
+
+app.get('/api/persons/:id', (request, response) => {
+  console.log('index.app.get - /api/persons/:id - params:', request.params);
+
+  const id = request.params.id;
+  const found = persons.find(person => person.id === id);
+  
+  if (found) {
+    response.json(found);
+  } else {
+    response.statusMessage = `index.app.get - /api/persons/:id - Id (${id}) not found`;
+    response
+      .status(404)
+      .end();
+  }
+})
 
 
 const PORT = 3001;
