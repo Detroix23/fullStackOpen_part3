@@ -72,7 +72,7 @@ app.delete('/api/notes/:id', (request, response) => {
 app.post('/api/notes', (request, response) => {
   console.log('index.app.post - /api/notes - headers:', request.headers);
   
-  const body = request.body
+  const body = request.body;
   console.log('index.app.post - /api/notes - note:', body);
   
   if (!body.content) {

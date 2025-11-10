@@ -29,6 +29,16 @@ let persons = [
     }
 ];
 
+/**
+ * Return an integer between [a, b[.
+ * @param {Number} a: Lower bound (inclusive)
+ * @param {Number} b: Upper bound (exculsive)
+ */
+const randomInteger = (a, b) => {
+  return Math.round(Math.random() * (b - a) + a);
+}
+
+
 // Home.
 app.get('/', (_, response) => {
   console.log('index.app.get - / - Greetings.')
@@ -59,7 +69,6 @@ app.get('/api/persons', (_, response) => {
   response.json(persons);
 });
 
-
 // Get a specific person by id.
 app.get('/api/persons/:id', (request, response) => {
   console.log('index.app.get - /api/persons/:id - params:', request.params);
@@ -87,6 +96,31 @@ app.delete('/api/persons/:id', (request, response) => {
   response
     .status(204)
     .end();
+});
+
+// Create a new person by Post.
+app.post('/api/persons', (request, response) => {
+  const body = request.body;
+  console.log('index.app.post - /api/persons - body:', body);
+
+  if (!body) {
+    response
+      .status(400)
+      .json({
+        error: "Body is empty."
+      })
+  } else {
+    const newPerson = {
+      id: String(randomInteger(0, Math.pow(2, 31) - 1)),
+      name: body.name,
+      number: body.number,
+    }
+
+    persons = persons.concat(newPerson);
+
+    response.json(newPerson);
+  }
+
 });
 
 
