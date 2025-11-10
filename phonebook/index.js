@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 
 // Hardcoded data.
-const persons = [
+let persons = [
     { 
       id: "1",
       name: "Arto Hellas", 
@@ -29,6 +29,7 @@ const persons = [
     }
 ];
 
+// Home.
 app.get('/', (_, response) => {
   console.log('index.app.get - / - Greetings.')
   response.send(`
@@ -37,6 +38,7 @@ app.get('/', (_, response) => {
   `);
 });
 
+// Get informations about the service.
 app.get('/info', (request, response) => {
   console.log('index.app.get - /info - Informations. Headers:', request.headers);
   
@@ -50,12 +52,15 @@ app.get('/info', (request, response) => {
   `);
 })
 
+// Get all persons.
 app.get('/api/persons', (_, response) => {
   console.log('index.app.get - /api/persons/ - Responding with persons:', persons);
 
   response.json(persons);
 });
 
+
+// Get a specific person by id.
 app.get('/api/persons/:id', (request, response) => {
   console.log('index.app.get - /api/persons/:id - params:', request.params);
 
@@ -70,9 +75,22 @@ app.get('/api/persons/:id', (request, response) => {
       .status(404)
       .end();
   }
-})
+});
+
+// Delete a person by id.
+app.delete('/api/persons/:id', (request, response) => {
+  console.log('index.app.delete - /api/persons/:id - params:', request.params);
+
+  const id = request.params.id;
+  persons = persons.filter(person => person.id !== id);
+
+  response
+    .status(204)
+    .end();
+});
 
 
+// Server
 const PORT = 3001;
 
 app.listen(PORT);
