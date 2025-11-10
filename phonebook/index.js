@@ -104,22 +104,41 @@ app.post('/api/persons', (request, response) => {
   console.log('index.app.post - /api/persons - body:', body);
 
   if (!body) {
+    console.log('index.app.post - /api/persons - Empty body (400).');
     response
       .status(400)
       .json({
-        error: "Body is empty."
-      })
-  } else {
-    const newPerson = {
-      id: String(randomInteger(0, Math.pow(2, 31) - 1)),
-      name: body.name,
-      number: body.number,
-    }
-
-    persons = persons.concat(newPerson);
-
-    response.json(newPerson);
+        error: 'Body is empty.'
+      });
+  } 
+  
+  if (persons.map(person => person.name).includes(body.name)) {
+    console.log('index.app.post - /api/persons - Name already existant (400).');
+    response
+      .status(400)
+      .json({
+        error: `Name '${body.name}' is not unique.`
+      });
   }
+
+  if (!(body.name && body.number)) {
+    console.log('index.app.post - /api/persons - Fields unfilled (400).');
+    response
+      .status(400)
+      .json({
+        error: `Both name (${body.name}) and number (${body.number}) can not be blank.`
+      });
+  }
+
+  const newPerson = {
+    id: String(randomInteger(0, Math.pow(2, 31) - 1)),
+    name: body.name,
+    number: body.number,
+  }
+
+  persons = persons.concat(newPerson);
+
+  response.json(newPerson);
 
 });
 
