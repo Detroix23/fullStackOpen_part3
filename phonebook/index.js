@@ -37,6 +37,19 @@ app.get('/', (_, response) => {
   `);
 });
 
+app.get('/info', (request, response) => {
+  console.log('index.app.get - /info - Informations. Headers:', request.headers);
+  
+  datetime = new Date();
+  console.log('index.app.get - /info - Date: ', datetime);
+
+  response.send(`
+    <h1>Informations</h1>
+    <p>Phonebook has information for ${persons.length} people.</p>
+    <p>Received: ${datetime}</p>
+  `);
+})
+
 app.get('/api/persons', (request, response) => {
   console.log('index.app.get - /api/persons/ - Responding with persons:', persons);
 
