@@ -1,9 +1,11 @@
 // index.js
 
 const express = require('express');
+const morgan = require('morgan');
 
 const app = express();
 app.use(express.json());
+app.use(morgan('tiny'));
 
 // Hardcoded data.
 let persons = [
@@ -26,6 +28,11 @@ let persons = [
       id: "4",
       name: "Mary Poppendieck", 
       number: "39-23-6423122"
+    },
+    {
+      id: "6",
+      name: "Isaac Asimov",
+      number: "5430123123123112"
     }
 ];
 
